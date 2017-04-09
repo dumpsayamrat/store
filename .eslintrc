@@ -1,0 +1,24 @@
+{
+  "plugins": ["node"],
+  "extends": ["eslint:recommended", "plugin:node/recommended"],
+  "ecmaFeatures": {
+    "modules": true,
+    "spread": true,
+    "restParams": true
+  },
+  "env": {
+    "node": true,
+    "es6": true,
+    "jest": true
+  },
+  "rules": {
+    "node/no-unsupported-features": 0,
+    "no-console": 0,
+    "no-process-exit": 0,
+    "semi": "error",
+    "no-unused-vars": ["error", { "args": "none" }]
+  },
+  "parserOptions": {
+    "sourceType": "module"
+  }
+}

@@ -3,6 +3,8 @@ import express from 'express';
 import morgan from 'morgan';
 import bodyParser from 'body-parser';
 
+import CategoryRouter from './routes/CategoryRouter';
+
 export default class Api {
 
   constructor() {
@@ -18,10 +20,12 @@ export default class Api {
   }
 
   routes() {
-     // this.express.use(produceRouter.path, produceRouter.router);
      this.express.get('/', (req, res) => {
        res.json({ message: 'Hello Store!!'});
      });
+
+     const categoryRouter = new CategoryRouter();
+     this.express.use(categoryRouter.path, categoryRouter.router);
   }
 
 }
