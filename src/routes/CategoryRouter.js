@@ -26,7 +26,7 @@ export default class CategoryRouter {
       const category = await this.categoryService.get(id);
       res.status(200).json(category);
     } catch(error) {
-      if (error.message === 'Not found') res.status(404).send('Category not found');
+      if (error.message === 'Not found') res.status(400).send('Category not found');
       res.status(500).send(error.stack);
     }
   }
@@ -41,13 +41,33 @@ export default class CategoryRouter {
     }
   }
 
-  updateById(req, res) {
-
+  async updateById(req, res) {
+    try {
+      const { id } = req.params;
+      const category = await this.categoryService.get(id);
+      const {
+        name = category.name,
+        description = category.description
+      } = req.body;
+      const updatedCategory = await this.categoryService.update({ id, name, description});
+      res.status(200).json(updatedCategory);
+    } catch(error) {
+      if (error.message === 'Not found') res.status(400).send('Category not found');
+      res.status(500).send(error.stack);
+    }
   }
 
 
-  removeById(req, res) {
-
+  async removeById(req, res) {
+    try {
+      const { id } = req.params;
+      const category = await this.categoryService.get(id);
+      const deletedCategory = await this.categoryService.delete(category.id);
+      res.status(200).json(deletedCategory);
+    } catch(error) {
+      if (error.message === 'Not found') res.status(400).send('Category not found');
+      res.status(500).send(error.stack);
+    }
   }
 
   /**
@@ -57,8 +77,8 @@ export default class CategoryRouter {
     this.router.get('/', this.getAll.bind(this));
     this.router.get('/:id', this.getById.bind(this));
     this.router.post('/', this.store.bind(this));
-    // this.router.put('/:id', this.updateOneById.bind(this));
-    // this.router.delete('/:id', this.removeById.bind(this));
+    this.router.put('/:id', this.updateById.bind(this));
+    this.router.delete('/:id', this.removeById.bind(this));
   }
 
 }

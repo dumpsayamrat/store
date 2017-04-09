@@ -17,6 +17,7 @@ export default class Api {
     this.express.use(morgan('dev'));
     this.express.use(bodyParser.json());
     this.express.use(bodyParser.urlencoded({extended: false}));
+    this.express.set('x-powered-by', false);
   }
 
   routes() {
