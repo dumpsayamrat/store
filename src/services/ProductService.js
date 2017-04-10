@@ -41,7 +41,6 @@ export default class ProductService {
     });
   }
   create(...params) {
-   
     const queryText = `
       INSERT INTO product (category_id, name, description, created_at, updated_at, price, quantity) 
       VALUES ($1, $2, $3, NOW(), NOW(), $4, $5) 

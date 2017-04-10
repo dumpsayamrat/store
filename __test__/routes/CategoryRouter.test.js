@@ -2,25 +2,34 @@ import request from 'supertest-as-promised';
 
 import Api from '../../src/Api';
 import CategoryService from '../../src/services/CategoryService';
+import ProductService from '../../src/services/ProductService';
 
 const app = new Api().express;
 
 describe('Category API', () => {
   const categoryService = new CategoryService();
+  const productService = new ProductService();
   beforeAll(() => {
-    categoryService.empty().then((message) => {
-      if (message === 'SUCCESS') console.log('Clear the table category: SUCCESS');
-      categoryService.create({
-        name: 'Test name 1',
-        description: 'Test description 1'
-      });
-      categoryService.create({
-        name: 'Test name 2',
-        description: 'Test description 2'
+    return productService.empty().then((message) => {
+      if (message === 'SUCCESS') console.log('Clear the table product: SUCCESS');
+      return categoryService.empty().then((message) => {
+        if (message === 'SUCCESS') console.log('Clear the table category: SUCCESS');
+        return categoryService.create({
+          name: 'Test name 1',
+          description: 'Test description 1'
+        }).then(() => {
+          return categoryService.create({
+            name: 'Test name 2',
+            description: 'Test description 2'
+          });
+        });
+      }).catch((error) => {
+        console.log(error);
+        console.error('Clear the table category: FAIL');
       });
     }).catch((error) => {
       console.log(error);
-      console.error('Clear the table category: FAIL');
+      console.error('Clear the table product: FAIL');
     });
   });
   describe('GET /api/categories - get all categories', () => {

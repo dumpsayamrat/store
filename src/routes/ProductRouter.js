@@ -81,7 +81,6 @@ export default class CategoryRouter {
       );
       res.status(200).json(updatedProduct);
     } catch(error) {
-      console.error(error);
       if (error.message === 'Category not found') res.status(400).send('Category not found');
       if (error.message === 'Product not found') res.status(400).send('Product not found');
       res.status(500).send(error.stack);

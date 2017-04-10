@@ -10,29 +10,29 @@ describe('Category API', () => {
   const categoryService = new CategoryService();
   const productService = new ProductService();
   beforeAll(() => {
-    console.log('KUYYY', 'before');
-    productService.empty().then((message) => {
+    return productService.empty().then((message) => {
       if (message === 'SUCCESS') console.log('Clear the table product: SUCCESS');
-      categoryService.empty().then((message) => {
+      return categoryService.empty().then((message) => {
         if (message === 'SUCCESS') console.log('Clear the table category: SUCCESS');
-        categoryService.create({
+        return categoryService.create({
           name: 'Food',
           description: 'Food Stuff'
         }).then((category) => {
-          productService.create(
+          return productService.create(
             category.id,
             'Banana',
             'Banana to you',
             10,
             8
-          );
-          productService.create(
-            category.id,
-            'Apple',
-            'Apple to you',
-            20,
-            18
-          );
+          ).then(() => {
+            return productService.create(
+              category.id,
+              'Apple',
+              'Apple to you',
+              20,
+              18
+            );
+          });
         });
       }).catch((error) => {
         console.error('Clear the table category: FAIL');
@@ -50,7 +50,6 @@ describe('Category API', () => {
         .expect(200)
         .then(res => {
           // check that it sends back an array
-          console.log('res:', res.body);
           const products = res.body;
           expect(products).toBeInstanceOf(Array);
         });
@@ -87,8 +86,8 @@ describe('Category API', () => {
       const foodProducts = res.body;
       expect(foodProducts).toBeInstanceOf(Array);
       expect(foodProducts.length).toBe(2);
-      expect(foodProducts.name[0]).toEqual('Banana');
-      expect(foodProducts.name[1]).toEqual('Apple');
+      expect(foodProducts[0].name).toEqual('Banana');
+      expect(foodProducts[1].name).toEqual('Apple');
     });
   });
 
