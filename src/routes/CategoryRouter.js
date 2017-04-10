@@ -26,7 +26,7 @@ export default class CategoryRouter {
       const category = await this.categoryService.get(id);
       res.status(200).json(category);
     } catch(error) {
-      if (error.message === 'Not found') res.status(400).send('Category not found');
+      if (error.message === 'Category not found') res.status(400).send('Category not found');
       res.status(500).send(error.stack);
     }
   }
@@ -52,7 +52,7 @@ export default class CategoryRouter {
       const updatedCategory = await this.categoryService.update({ id, name, description});
       res.status(200).json(updatedCategory);
     } catch(error) {
-      if (error.message === 'Not found') res.status(400).send('Category not found');
+      if (error.message === 'Category not found') res.status(400).send('Category not found');
       res.status(500).send(error.stack);
     }
   }
@@ -65,7 +65,7 @@ export default class CategoryRouter {
       const deletedCategory = await this.categoryService.delete(category.id);
       res.status(200).json(deletedCategory);
     } catch(error) {
-      if (error.message === 'Not found') res.status(400).send('Category not found');
+      if (error.message === 'Category not found') res.status(400).send('Category not found');
       res.status(500).send(error.stack);
     }
   }

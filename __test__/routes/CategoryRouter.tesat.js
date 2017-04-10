@@ -1,4 +1,5 @@
 import request from 'supertest-as-promised';
+
 import Api from '../../src/Api';
 import CategoryService from '../../src/services/CategoryService';
 
@@ -10,16 +11,15 @@ describe('Category API', () => {
     categoryService.empty().then((message) => {
       if (message === 'SUCCESS') console.log('Clear the table category: SUCCESS');
       categoryService.create({
-        id: 1,
         name: 'Test name 1',
         description: 'Test description 1'
       });
       categoryService.create({
-        id: 2,
         name: 'Test name 2',
         description: 'Test description 2'
       });
     }).catch((error) => {
+      console.log(error);
       console.error('Clear the table category: FAIL');
     });
   });

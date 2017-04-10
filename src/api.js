@@ -4,6 +4,7 @@ import morgan from 'morgan';
 import bodyParser from 'body-parser';
 
 import CategoryRouter from './routes/CategoryRouter';
+import ProductRouter from './routes/ProductRouter';
 
 export default class Api {
 
@@ -26,7 +27,10 @@ export default class Api {
      });
 
      const categoryRouter = new CategoryRouter();
+     const productRouter = new ProductRouter();
+
      this.express.use(categoryRouter.path, categoryRouter.router);
+     this.express.use(productRouter.path, productRouter.router);
   }
 
 }
