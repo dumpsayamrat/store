@@ -2,6 +2,7 @@
 import express from 'express';
 import morgan from 'morgan';
 import bodyParser from 'body-parser';
+// import compression from 'compression';
 
 import CategoryRouter from './routes/CategoryRouter';
 import ProductRouter from './routes/ProductRouter';
@@ -18,6 +19,7 @@ export default class Api {
     this.express.use(morgan('dev'));
     this.express.use(bodyParser.json());
     this.express.use(bodyParser.urlencoded({extended: false}));
+    // this.express.use(compression());
     this.express.set('x-powered-by', false);
   }
 

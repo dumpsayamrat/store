@@ -1,4 +1,5 @@
 import * as http from 'http';
+import 'babel-polyfill';
 import Api from './Api';
 
 const app = new Api();

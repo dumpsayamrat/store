@@ -80,5 +80,4 @@ export default class CategoryRouter {
     this.router.put('/:id', this.updateById.bind(this));
     this.router.delete('/:id', this.removeById.bind(this));
   }
-
 }
